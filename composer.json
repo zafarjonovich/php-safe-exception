@@ -1,0 +1,14 @@
+{
+  "name": "zafarjonovich/php-safe-exception",
+  "description": "PHP safe exception",
+  "type": "package",
+  "autoload": {
+    "psr-4": {
+      "zafarjonovich\\PHPSafeException\\": "src"
+    }
+  },
+  "require": {
+    "ext-json": "*",
+    "ext-curl": "*"
+  }
+}
