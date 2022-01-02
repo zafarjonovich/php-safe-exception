@@ -21,7 +21,30 @@ or add
 
 to the require section of your `composer.json` file.
 
-------
+## Package structure
+<br>
+
+
+Every exception will converts other specific type. Now this types have:
+- Json: \zafarjonovich\PHPSafeException\converter\JsonConverter::class
+- Xml: \zafarjonovich\PHPSafeException\converter\XMLConverter::class
+- Array: \zafarjonovich\PHPSafeException\converter\ArrayConverter::class
+- Text: \zafarjonovich\PHPSafeException\converter\TextConverter::class
+
+<br>
+
+
+Every converted exception will saves specific places. Now this places have:
+- File: \zafarjonovich\PHPSafeException\saver\FileSaver::class
+- Telegram bot: \zafarjonovich\PHPSafeException\saver\TelegramBotSaver::class
+
+Each saver has a personal configuration, if they are not confugurated, Exception will not be saved
+
+### Configurations
+
+- TelegramBotSaver: token and chat_ids
+- FileSaver: filePath or pathGenerator
+
 ## Usage
 
 ```php
@@ -36,10 +59,8 @@ use zafarjonovich\PHPSafeException\converter\JsonConverter;
 try {
     throw new \Exception('My awesome exception');
 } catch (\Exception $exception) {
-    
     $saver = new FileSaver('exceptions/'.time().'.txt');
-    $saver->save(new JsonConverter($exception));
-    
+    $saver->save(new JsonStringGenerator($exception));
 }
 
 ?>
@@ -47,6 +68,7 @@ try {
 ```
 
 Also you can use multiple savers
+
 
 ```php
 
