@@ -31,14 +31,14 @@ to the require section of your `composer.json` file.
 require_once 'vendor/autoload.php';
 
 use \zafarjonovich\PHPSafeException\saver\FileSaver;
-use zafarjonovich\PHPSafeException\StringGenerator\JsonStringGenerator;
+use zafarjonovich\PHPSafeException\converter\JsonConverter;
 
 try {
     throw new \Exception('My awesome exception');
 } catch (\Exception $exception) {
     
     $saver = new FileSaver('exceptions/'.time().'.txt');
-    $saver->save(new JsonStringGenerator($exception));
+    $saver->save(new JsonConverter($exception));
     
 }
 
@@ -47,7 +47,6 @@ try {
 ```
 
 Also you can use multiple savers
-
 
 ```php
 
@@ -58,7 +57,7 @@ require_once 'vendor/autoload.php';
 use zafarjonovich\PHPSafeException\saver\FileSaver;
 use zafarjonovich\PHPSafeException\saver\TelegramBotSaver;
 use zafarjonovich\PHPSafeException\components\MultipleSaver;
-use zafarjonovich\PHPSafeException\StringGenerator\TextStringGenerator;
+use zafarjonovich\PHPSafeException\converter\TextConverter;
 
 try {
     throw new \Exception('My awesome exception');
@@ -69,7 +68,7 @@ try {
     $saver->addSaver(new FileSaver('exceptions/'.time().'.txt'));
     $saver->addSaver(new TelegramBotSaver('BOT_TOKEN',['chat_id1','chat_id2','chat_id3']));
     
-    $saver->save(new TextStringGenerator($exception));
+    $saver->save(new TextConverter($exception));
     
 }
 

@@ -1,16 +1,17 @@
 <?php
 
 
-namespace zafarjonovich\PHPSafeException\StringGenerator;
+namespace zafarjonovich\PHPSafeException\converter;
 
 
 use SimpleXMLElement;
-use zafarjonovich\PHPSafeException\base\StringGenerator;
+use zafarjonovich\PHPSafeException\base\Converter;
+use zafarjonovich\PHPSafeException\base\Convertible;
 
-class XMLStringGenerator extends StringGenerator
+class XMLConverter extends Converter implements Convertible
 {
     private $rootTag = 'Exception';
-
+    
     public function setRootTag(string $rootTag)
     {
         $this->rootTag = $rootTag;
@@ -19,27 +20,16 @@ class XMLStringGenerator extends StringGenerator
     /**
      * @return bool|string
      */
-    public function toString()
+    public function convert()
     {
         $rootTag = $this->rootTag;
         $xml = new SimpleXMLElement("<$rootTag/>");
-        $this->toXML($xml, $this->levels);
-        return $xml->asXML();
-    }
+        $this->toXML($xml, $this->exception);
 
-    /**
-     * @param \Exception $exception
-     */
-    protected function toPart($exception)
-    {
-        return [
-            'message' => $exception->getMessage(),
-            'file' => $exception->getFile(),
-            'line' => $exception->getLine(),
-            'code' => $exception->getCode()
-        ];
-    }
+        $textXml = $xml->asXML();
 
+        return $textXml;
+    }
 
     private function toXML(SimpleXMLElement $object, array $data)
     {
@@ -56,5 +46,10 @@ class XMLStringGenerator extends StringGenerator
                 $object->addChild($key, $value);
             }
         }
+    }
+    
+    public function __toString()
+    {
+        return $this->convert();
     }
 }

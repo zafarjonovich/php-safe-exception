@@ -17,14 +17,14 @@ class TelegramBotSaver implements Saver
         $this->chat_ids = $chat_ids;
     }
 
-    public function save($exceptionText)
+    public function save($convertedException)
     {
         foreach ($this->chat_ids as $chat_id) {
             $this->request(
                 'sendMessage',
                 [
                     'chat_id' => $chat_id,
-                    'text' => (string)$exceptionText
+                    'text' => (string)$convertedException
                 ]
             );
         }

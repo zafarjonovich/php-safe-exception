@@ -23,11 +23,11 @@ class FileSaver implements Saver
         $this->filePath = $filePath;
     }
 
-    public function save($exceptionText)
+    public function save($convertedException)
     {
         file_put_contents(
             $this->filePath,
-            (string)$exceptionText
+            (string)$convertedException
         );
     }
 }
