@@ -60,7 +60,7 @@ try {
     throw new \Exception('My awesome exception');
 } catch (\Exception $exception) {
     $saver = new FileSaver('exceptions/'.time().'.txt');
-    $saver->save(new JsonStringGenerator($exception));
+    $saver->save(new JsonConverter($exception));
 }
 
 ?>
